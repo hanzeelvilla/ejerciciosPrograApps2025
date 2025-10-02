@@ -26,16 +26,25 @@ class Person(
         else
             return -1
     }
+
+    fun isAdult(): Boolean {
+        return this.age >= 18
+    }
 }
 
 fun main() {
     val person1 = Person("Hanzeel", 21, "1234567890","M", 56.0, 1.75)
     val person2 = Person("Dari", 20, "0987654321", "F",60.0, 1.80)
 
-    val person1Imc: Int = person1.calculateIMC()
-    val persona2Imc: Int = person2.calculateIMC()
+    val person1IMC: Int = person1.calculateIMC()
+    val persona2IMC: Int = person2.calculateIMC()
+    val isPerson1Adult: Boolean = person1.isAdult()
+    val isPerson2Adult: Boolean = person2.isAdult()
 
-    println("IMC person1: $person1Imc")
-    println("IMC person2: $persona2Imc")
+    println("IMC person1: $person1IMC")
+    println("IMC person2: $persona2IMC")
+    println("Is person1 adult? $isPerson1Adult")
+    println("Is person2 adult? $isPerson2Adult")
+
 
 }
