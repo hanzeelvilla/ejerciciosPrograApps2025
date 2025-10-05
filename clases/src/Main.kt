@@ -1,22 +1,42 @@
 import kotlin.math.pow
+import kotlin.random.Random
 
-class Person(
-    name: String = "",
-    age: Int = 0,
-    dni: String = "",
-    sex: String = "M",
-    weight: Double,
-    height: Double
-) {
-    private val name: String = name
-    private val age: Int = age
-    private val dni: String = dni
-    private val sex: String = sex
-    private val weight: Double = weight
-    private val height: Double = height
+enum class Sex {
+    MALE,
+    FEMALE
+}
 
-    fun calculateIMC(): Int {
-        val imc = this.weight / this.height.pow(2.0)
+interface PersonData {
+    val name: String
+    val age: Int
+    val sex: Sex
+    val weight: Double
+    val height: Double
+
+    val minDNI: Int
+    val maxDNI: Int
+
+    val dni: Int
+
+    fun calculateIMC(): Int
+    fun isAdult(): Boolean
+}
+
+class Person (
+    override val name: String = "",
+    override val age: Int = 0,
+    override val sex: Sex = Sex.MALE,
+    override val weight: Double,
+    override val height: Double,
+
+): PersonData {
+
+    override val minDNI: Int = 1000000
+    override val maxDNI: Int = 99999999
+
+    override val dni: Int = generateDNI()
+    override fun calculateIMC(): Int {
+        val imc = weight / height.pow(2.0)
         println(imc)
 
         if(imc > 25)
@@ -27,24 +47,35 @@ class Person(
             return -1
     }
 
-    fun isAdult(): Boolean {
+    override fun isAdult(): Boolean {
         return this.age >= 18
+    }
+
+    private fun generateDNI(): Int {
+        val dniNumber = Random.nextInt(minDNI, maxDNI + 1)
+        return dniNumber
     }
 }
 
 fun main() {
-    val person1 = Person("Hanzeel", 21, "1234567890","M", 56.0, 1.75)
-    val person2 = Person("Dari", 20, "0987654321", "F",60.0, 1.80)
+    val person1 = Person("Hanzeel", 21, Sex.MALE, 56.0, 1.75)
+    val person2 = Person("Dari", 20, Sex.FEMALE,60.0, 1.80)
 
     val person1IMC: Int = person1.calculateIMC()
-    val persona2IMC: Int = person2.calculateIMC()
     val isPerson1Adult: Boolean = person1.isAdult()
+    val person1DNI: Int = person1.dni
+
+    val persona2IMC: Int = person2.calculateIMC()
     val isPerson2Adult: Boolean = person2.isAdult()
+    val person2DNI: Int = person2.dni
 
     println("IMC person1: $person1IMC")
-    println("IMC person2: $persona2IMC")
     println("Is person1 adult? $isPerson1Adult")
+    println("Person1 DNI: $person1DNI")
+    println("========================")
+    println("IMC person2: $persona2IMC")
     println("Is person2 adult? $isPerson2Adult")
+    println("Person2 DNI: $person2DNI")
 
 
 }
