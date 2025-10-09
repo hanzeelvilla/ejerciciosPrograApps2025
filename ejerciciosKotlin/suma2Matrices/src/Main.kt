@@ -14,6 +14,10 @@ fun imprimirMatriz(matriz: Array<IntArray>): Unit {
 }
 
 fun sumarMatrices(matriz1: Array<IntArray>, matriz2: Array<IntArray>): Array<IntArray> {
+    if(matriz1.size != matriz2.size || matriz1[0].size != matriz2[0].size) {
+        throw IllegalArgumentException("Las matrices deben tener las mismas dimensiones")
+    }
+
     val matrizRes = Array(matriz1.size) { IntArray(matriz1.size) }
 
     for(i in 0 until matriz1.size) {
@@ -34,9 +38,11 @@ fun main() {
 
     println("Matriz 1")
     imprimirMatriz(matriz1)
+    println("==========================")
 
     println("Matriz 2")
-    imprimirMatriz(matriz1)
+    imprimirMatriz(matriz2)
+    println("==========================")
 
     val sumaDeMatrices = sumarMatrices(matriz1, matriz2)
 
